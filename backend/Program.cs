@@ -2,6 +2,7 @@ using System.Text;
 using Backend.CSharp.Data;
 using Backend.CSharp.Models;
 using Backend.CSharp.Services;
+using Backend.CSharp.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -150,6 +151,10 @@ app.UseCors("AllowFrontend");
 // app.UseHttpsRedirection(); // Comentado para desenvolvimento local
 
 app.UseAuthentication();
+
+// Middleware para validar se o usuário ainda existe (antes de autorização)
+app.UseUserValidation();
+
 app.UseAuthorization();
 
 app.MapControllers();

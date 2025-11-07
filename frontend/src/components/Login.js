@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import authService from '../services/authService';
 import '../styles/auth.css';
@@ -12,6 +12,15 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
+
+  // Verifica se há mensagem de sessão expirada ou usuário deletado
+  useEffect(() => {
+    const message = sessionStorage.getItem('loginMessage');
+    if (message) {
+      setError(message);
+      sessionStorage.removeItem('loginMessage');
+    }
+  }, []);
 
   const validateField = (name, value, errorsObj = null) => {
     const errors = errorsObj || { ...fieldErrors };

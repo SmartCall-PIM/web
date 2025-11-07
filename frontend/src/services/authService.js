@@ -31,7 +31,16 @@ class AuthService {
       (error) => {
         // Não redireciona automaticamente se for erro de login (credenciais incorretas)
         if (error.response?.status === 401 && !error.config.url.includes('/auth/login')) {
+          // Verifica se a resposta indica que o usuário foi deletado
+          const isUserDeleted = error.response?.data?.requiresLogin === true;
+          
           this.logout();
+          
+          // Armazena mensagem para exibir na tela de login
+          if (isUserDeleted) {
+            sessionStorage.setItem('loginMessage', 'Sua conta foi removida do sistema. Entre em contato com o administrador.');
+          }
+          
           window.location.href = '/login';
         }
         return Promise.reject(error);

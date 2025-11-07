@@ -1,0 +1,11 @@
+const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
+
+module.exports = {
+  // ... suas configurações existentes
+  plugins: [
+    new Dotenv({
+      systemvars: true, // Permite usar variáveis de ambiente do sistema
+    }),
+  ],
+};

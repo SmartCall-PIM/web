@@ -1,0 +1,175 @@
+/* Sidebar de Chamados */
+.chamados-sidebar {
+  width: 350px;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.chamados-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chamados-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.btn-novo-chamado {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-novo-chamado:hover {
+  background: #1d4ed8;
+}
+
+.chamados-lista {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.chamados-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.chamados-empty p {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.chamados-empty button {
+  padding: 0.5rem 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.chamado-item {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chamado-item:hover {
+  background: #f9fafb;
+  border-color: #2563eb;
+}
+
+.chamado-item.ativo {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+
+.chamado-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.chamado-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chamado-titulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chamado-usuario {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.chamado-tempo {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.chamado-preview {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.chamado-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.chamado-badges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge {
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: white;
+  text-transform: uppercase;
+}
+
+.chamado-mensagens-count {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .chamados-sidebar {
+    width: 100%;
+    max-width: 350px;
+  }
+}

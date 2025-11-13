@@ -255,8 +255,22 @@ public class ChamadosController : ControllerBase
 
         try
         {
+            _logger.LogInformation("Iniciando criação de chamado para usuário {UserId}", userId);
+            _logger.LogInformation("Mensagem inicial: {Mensagem}", request.MensagemInicial);
+            
             // Analisa a mensagem inicial com a IA
+            _logger.LogInformation("Chamando GeminiService para análise...");
             var analise = await _geminiService.AnalisarChamadoAsync(request.MensagemInicial);
+            
+            if (analise != null)
+            {
+                _logger.LogInformation("Análise IA concluída - Título: {Titulo}, Categoria: {Categoria}, Prioridade: {Prioridade}", 
+                    analise.Titulo, analise.Categoria, analise.Prioridade);
+            }
+            else
+            {
+                _logger.LogWarning("Análise IA retornou null - usando valores padrão");
+            }
 
             // Cria o chamado associado ao usuário autenticado
             // Todos os dados vêm do token JWT - não aceita parâmetros externos

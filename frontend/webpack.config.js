@@ -2,12 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/',
     clean: true,
   },
   module: {
@@ -35,6 +37,14 @@ module.exports = {
       systemvars: true,
       defaults: false
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { 
+          from: 'public/staticwebapp.config.json', 
+          to: 'staticwebapp.config.json' 
+        }
+      ]
+    })
   ],
   devServer: {
     static: {

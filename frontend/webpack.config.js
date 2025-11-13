@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -28,10 +29,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.DefinePlugin({
-      'process.env.REACT_APP_BACKEND_URL': JSON.stringify(
-        process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000/api'
-      ),
+    new Dotenv({
+      path: './.env.local',
+      safe: false,
+      systemvars: true,
+      defaults: false
     }),
   ],
   devServer: {

@@ -150,35 +150,53 @@ function ChatChamado({ chamado, onAtualizarChamado, isTecnico = false }) {
       }
     }
 
+    // Adiciona mensagem do usuário IMEDIATAMENTE (antes de enviar ao backend)
+    const tempUserMessage = {
+      text: message,
+      isUser: true,
+      senderType: 'user',
+      id: Date.now(), // ID temporário
+      createdAt: new Date().toISOString()
+    };
+    
+    setMensagens(prev => [...prev, tempUserMessage]);
     setLoading(true);
 
     try {
       // Envia mensagem para o backend
       const response = await chamadoService.enviarMensagem(chamado.Id, message);
       
-      // Adiciona a mensagem do usuário
-      const userMsg = {
-        text: response.UserMessage.Message,
-        isUser: true,
-        senderType: response.UserMessage.SenderType,
-        id: response.UserMessage.Id,
-        createdAt: response.UserMessage.CreatedAt
-      };
-      
-      const newMessages = [userMsg];
-      
-      // Adiciona resposta do bot se houver
-      if (response.BotResponse) {
-        newMessages.push({
-          text: response.BotResponse.Message,
-          isUser: false,
-          senderType: response.BotResponse.SenderType || 'ai',
-          id: response.BotResponse.Id,
-          createdAt: response.BotResponse.CreatedAt
-        });
-      }
-      
-      setMensagens(prev => [...prev, ...newMessages]);
+      // Remove a mensagem temporária e adiciona as mensagens reais do servidor
+      setMensagens(prev => {
+        // Remove a mensagem temporária
+        const semTemp = prev.filter(m => m.id !== tempUserMessage.id);
+        
+        const newMessages = [];
+        
+        // Adiciona a mensagem do usuário do servidor
+        if (response.UserMessage) {
+          newMessages.push({
+            text: response.UserMessage.Message,
+            isUser: true,
+            senderType: response.UserMessage.SenderType,
+            id: response.UserMessage.Id,
+            createdAt: response.UserMessage.CreatedAt
+          });
+        }
+        
+        // Adiciona resposta do bot se houver
+        if (response.BotResponse) {
+          newMessages.push({
+            text: response.BotResponse.Message,
+            isUser: false,
+            senderType: response.BotResponse.SenderType || 'ai',
+            id: response.BotResponse.Id,
+            createdAt: response.BotResponse.CreatedAt
+          });
+        }
+        
+        return [...semTemp, ...newMessages];
+      });
       
       // Atualiza o chamado na lista
       if (onAtualizarChamado) {
@@ -186,6 +204,10 @@ function ChatChamado({ chamado, onAtualizarChamado, isTecnico = false }) {
       }
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error);
+      
+      // Remove a mensagem temporária em caso de erro
+      setMensagens(prev => prev.filter(m => m.id !== tempUserMessage.id));
+      
       alert('Erro ao enviar mensagem. Por favor, tente novamente.');
     } finally {
       setLoading(false);

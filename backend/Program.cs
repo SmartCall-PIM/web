@@ -27,10 +27,9 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configuração do Entity Framework com SQLite
+// Configuração do Entity Framework com SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") 
-        ?? "Data Source=smartcall.db"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configuração do Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

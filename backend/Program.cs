@@ -20,7 +20,9 @@ builder.Services.AddCors(options =>
                 "http://localhost:3001",
                 "http://10.0.2.2:8000",  // Android Emulator
                 "http://192.168.1.64:8081", // Expo Dev Server
-                "https://delightful-cliff-0d4555a0f.3.azurestaticapps.net" // Azure Static Web App
+                "https://delightful-cliff-0d4555a0f.3.azurestaticapps.net", // Azure Static Web App
+                "https://www.app-smartcall.tech", // Domínio personalizado
+                "http://www.app-smartcall.tech"   // Domínio personalizado (HTTP)
               )
               .AllowAnyMethod()
               .AllowAnyHeader()
